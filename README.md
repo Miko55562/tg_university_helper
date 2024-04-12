@@ -1,4 +1,4 @@
-# tg_university_helper
+# Telegram university helper
 
 ![](misk/image/gub.webp)
 
@@ -190,6 +190,11 @@ aiogram — это современная и полностью асинхрон
 минусов - во второй строчке. Алгебраическая сумма проставляется в нижней строчке
 
 ## Инструкция по использованию:
+
+    git clone https://github.com/Miko55562/tg_university_helper.git
+    (edit src/settings.py and past your token)
+    pip install -r requirements.txt
+    python src/main.py    
 
 ## Команда:
 * Пудованин Михаил

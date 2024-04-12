@@ -11,12 +11,12 @@ from settings import TOKEN
 router = Router()
 
 
-@router.message(CommandStart())
+@router.message(CommandStart())  # Отвечает на команду /start
 async def start_command(message: types.Message, state: FSMContext) -> None:
     await message.answer(f'Добрый день пользователе! Я помогу тебе определитиься с выбором направления в которое тебе пойти)', reply_markup=src.markup.markup_main())
 
 
-@router.message(F.text == "Пройти тест")
+@router.message(F.text == "Пройти тест")  # Отвечает на сообщение Пройти тест и запускает машину состояний
 async def process_test(message: types.Message, state: FSMContext) -> None:
     await state.set_state(src.states.Test.Q1)
     await message.answer(f'Вопрос 1', reply_markup=src.markup.markup_test_1())
