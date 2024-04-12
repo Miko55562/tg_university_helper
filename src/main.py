@@ -6,6 +6,7 @@ from aiogram.fsm.context import FSMContext
 import src.markup
 import src.states
 from aiogram.filters import CommandStart
+from settings import TOKEN
 
 router = Router()
 
@@ -128,7 +129,7 @@ async def start_command(message: types.Message, state: FSMContext):
 
 
 async def main():
-    bot = Bot(token='7037158023:AAHsMmQDnjx_p5c1rb4E4HIQogINIXbNXwM')
+    bot = Bot(token=TOKEN)
     dp = Dispatcher()
     dp.include_router(router)
     await dp.start_polling(bot)
