@@ -107,22 +107,52 @@ async def process_test_12(message: types.Message, state: FSMContext) -> None:
 
 
 @router.message(src.states.Test.Q13)
-async def process_test_12(message: types.Message, state: FSMContext) -> None:
+async def process_test_13(message: types.Message, state: FSMContext) -> None:
     await state.update_data(S13=message.text)
     await state.set_state(src.states.Test.Q14)
     await message.answer(f'Вопрос 14', reply_markup=src.markup.markup_test_14())
 
 
 @router.message(src.states.Test.Q14)
-async def process_test_13(message: types.Message, state: FSMContext) -> None:
+async def process_test_14(message: types.Message, state: FSMContext) -> None:
     await state.update_data(S14=message.text)
     await state.set_state(src.states.Test.Q15)
     await message.answer(f'Вопрос 15', reply_markup=src.markup.markup_test_15())
 
-
 @router.message(src.states.Test.Q15)
-async def process_test_14(message: types.Message, state: FSMContext) -> None:
+async def process_test_15(message: types.Message, state: FSMContext) -> None:
     await state.update_data(S15=message.text)
+    await state.set_state(src.states.Test.Q16)
+    await message.answer(f'Вопрос 16', reply_markup=src.markup.markup_test_16())
+
+@router.message(src.states.Test.Q16)
+async def process_test_16(message: types.Message, state: FSMContext) -> None:
+    await state.update_data(S16=message.text)
+    await state.set_state(src.states.Test.Q17)
+    await message.answer(f'Вопрос 17', reply_markup=src.markup.markup_test_17())
+
+@router.message(src.states.Test.Q17)
+async def process_test_17(message: types.Message, state: FSMContext) -> None:
+    await state.update_data(S17=message.text)
+    await state.set_state(src.states.Test.Q18)
+    await message.answer(f'Вопрос 18', reply_markup=src.markup.markup_test_18())
+
+@router.message(src.states.Test.Q18)
+async def process_test_18(message: types.Message, state: FSMContext) -> None:
+    await state.update_data(S18=message.text)
+    await state.set_state(src.states.Test.Q19)
+    await message.answer(f'Вопрос 19', reply_markup=src.markup.markup_test_19())
+
+@router.message(src.states.Test.Q19)
+async def process_test_19(message: types.Message, state: FSMContext) -> None:
+    await state.update_data(S19=message.text)
+    await state.set_state(src.states.Test.Q20)
+    await message.answer(f'Вопрос 20', reply_markup=src.markup.markup_test_20())
+
+
+@router.message(src.states.Test.Q20)
+async def process_test_20(message: types.Message, state: FSMContext) -> None:
+    await state.update_data(S20=message.text)
     data = await state.get_data()
     await state.clear()
     await message.answer(f'Опрос завершён {data}', reply_markup=src.markup.markup_main())
