@@ -22,3 +22,7 @@ class Test(StatesGroup):
     Q18 = State()
     Q19 = State()
     Q20 = State()
+
+
+class Subjects(StatesGroup):
+    Choose = State()
