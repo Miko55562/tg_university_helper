@@ -13,7 +13,7 @@ async def create_table():
 
 async def create_specialties_table():
     async with aiosqlite.connect("src/mydatabase.db") as con:
-        await con.execute('''CREATE TABLE IF NOT EXISTS specialties (specialty_id TEXT, specialty_name TEXT, min_score INTEGER, avg_score INTEGER, psycho_type INT)
+        await con.execute('''CREATE TABLE IF NOT EXISTS specialties (specialty_id TEXT, specialty_name TEXT, min_score INTEGER, avg_score INTEGER, psycho_type INT, subjects TEXT)
                             ''')
         await con.commit()
 
@@ -68,14 +68,31 @@ async def get_subject_choice(user_id: int) -> dict:
         else:
             return None
 
-async def find_matching_specialties(sum_score: int, psycho_type: int):
+async def find_matching_specialties(sum_score: int, psycho_type: int, subjects: dict):
     async with aiosqlite.connect("src/mydatabase.db") as con:
         cur = await con.cursor()
-        print(psycho_type, sum_score)
-        await cur.execute("SELECT specialty_id, specialty_name FROM specialties WHERE psycho_type = ? AND avg_score < ?", (psycho_type, sum_score))
+        # print(psycho_type, sum_score)
+        await cur.execute("SELECT specialty_id, specialty_name, min_score, avg_score, subjects FROM specialties WHERE psycho_type = ? AND avg_score < ?", (psycho_type, sum_score))
         result = await cur.fetchall() 
-        print(result)
+        # print(result)
+
+        for i in range(len(result)):
+            print(result[i])
+
+        print('stalo \n\n')
+
         if result and result[0] is not None:
+            i = 0
+            for res in result:
+                res = list(res)
+                res[4] = res[4].replace(',', ' ')
+                res[4] = res[4].replace('/', ' ')
+                res[4] = res[4].split()
+
+                if any([r not in [subject['subject'].lower() for subject in subjects['Choose']] for r in res[4]]):
+                    print(result[i])
+                    result.pop(i)
+
             return result
         else:
             return None
@@ -90,9 +107,11 @@ async def main():
     with open('src/courses.csv', newline='', encoding='utf-8') as csvfile:
         csvreader = csv.reader(csvfile)
         next(csvreader)  # Пропускаем заголовок
+
         for row in csvreader:
+            print(len(row), row)
             # Вставляем данные из CSV файла в таблицу
-            cursor.execute('INSERT INTO specialties VALUES (?, ?, ?, ?, ?)', row)
+            cursor.execute('INSERT INTO specialties VALUES (?, ?, ?, ?, ?, ?)', row)
 
     # Сохраняем изменения и закрываем соединение с базой данных
     conn.commit()
