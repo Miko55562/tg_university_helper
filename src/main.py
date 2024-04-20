@@ -291,8 +291,6 @@ async def process_test_19(message: types.Message, state: FSMContext) -> None:
         await message.answer("Пожалуйста, выберите один из предложенных вариантов().")
 
 
-
-
 @router.message(states.Test.Q20)
 async def process_test_20(message: types.Message, state: FSMContext) -> None:
     if message.text == "Первое":
@@ -313,8 +311,6 @@ async def process_test_20(message: types.Message, state: FSMContext) -> None:
     ans = []
     for i in data.keys():
         ans.append(data[i])
-    print(data, ans)
-    print(ans, psycho_types[0][1], reduce(lambda x, y: x+psycho_types[0][1].count(y), set(ans), 0))
 
     max = 0
     max_type = 0
@@ -355,9 +351,10 @@ async def process_test(message: types.Message) -> None:
 
     if data_testing and data_subjects:
         await message.answer(f'{data_testing}', reply_markup=markup.markup_main())
-        await message.answer(f'{'\n'.join([f"{i['subject']}: {i['score']} баллов" for i in data_subjects['Choose']])}', reply_markup=markup.markup_main())
-
-        specialties = await find_matching_specialties(sum([i['score'] for i in data_subjects['Choose']]), result)
+        subjects = [f"{i['subject']}: {i['score']} баллов" for i in data_subjects['Choose']]
+        await message.answer('\n'.join(subjects), reply_markup=markup.markup_main())
+        user_subject = await get_subject_choice(user_id=message.from_user.id)
+        specialties = await find_matching_specialties(sum([i['score'] for i in data_subjects['Choose']]), result, user_subject)
         if specialties:
             for specialty in specialties:
                 await message.answer(f'{specialty}', reply_markup=markup.markup_main())
@@ -369,7 +366,8 @@ async def process_test(message: types.Message) -> None:
         await message.answer(f'{data_testing}', reply_markup=markup.markup_main())
         await message.answer(f'Введить предметы которые сдавали', reply_markup=markup.markup_main())
     elif data_subjects:
-        await message.answer(f'{'\n'.join([f"{i['subject']}: {i['score']} баллов" for i in data_subjects['Choose']])}', reply_markup=markup.markup_main())
+        subjects = [f"{i['subject']}: {i['score']} баллов" for i in data_subjects['Choose']]
+        await message.answer('\n'.join(subjects), reply_markup=markup.markup_main())
         await message.answer(f'Пройдите профтест', reply_markup=markup.markup_main())
     else:
         await message.answer("У вас нет результатов тестирования!", reply_markup=markup.markup_main())
@@ -394,18 +392,21 @@ async def process_exam_scores(message: types.Message, state: FSMContext):
 
 
     data_subjects = await get_subject_choice(user_id=message.from_user.id)
-    if 'Choose' in data_subjects:
+    if data_subjects and ('Choose' in data_subjects):
         i = 0
         for sub in data['Choose']:
             if sub['subject'] in [subject['subject'] for subject in data_subjects['Choose']]:
                 data_subjects['Choose'].pop(i)
             data_subjects['Choose'].append(sub)
             i += 1
+        await set_subject_choice(user_id=message.from_user.id, subjects=data_subjects)
+        data = [f"{i['subject']}: {i['score']} баллов" for i in data['Choose']]
+    else:
+        await set_subject_choice(user_id=message.from_user.id, subjects=data["Choose"])
 
-    await set_subject_choice(user_id=message.from_user.id, subjects=data_subjects)
-    data = [f"{i['subject']}: {i['score']} баллов" for i in data['Choose']]
-    await message.answer(f"Выбранные предметы и баллы по экзаменам:\n{'\n'.join(data)}", reply_markup=markup.markup_main())
-    
+
+    await message.answer(f'Выбранные предметы и баллы по экзаменам:\n{" ".join(data)}', reply_markup=markup.markup_main())
+
 
 
 

@@ -356,7 +356,7 @@ def markup_subjects():
     kb = [
         [
             KeyboardButton(text='Математика'),
-            KeyboardButton(text='Русский язык'),
+            KeyboardButton(text='Русский'),
         ],
         [
             KeyboardButton(text='Информатика'),
@@ -375,7 +375,7 @@ def markup_subjects():
             KeyboardButton(text='Литература'),
         ],
         [
-            KeyboardButton(text='Иностранные языки'),
+            KeyboardButton(text='Иностранный язык'),
         ],
         [
             KeyboardButton(text='Готово'),
