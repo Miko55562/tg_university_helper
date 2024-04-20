@@ -17,12 +17,13 @@ router = Router()
 
 @router.message(CommandStart())  # Отвечает на команду /start
 async def start_command(message: types.Message, state: FSMContext) -> None:
-    await message.answer(f'Добрый день пользователе! Я помогу тебе определитиься с выбором направления в которое тебе пойти)\n\n{test_questions.q}', reply_markup=markup.markup_main())
+    await message.answer(f'Для начала пройди тест, выбери предметы по которым ты сдал ЕГЭ и посмотри результат)', reply_markup=markup.markup_main())
 
 
-@router.message(F.text == "Пройти тест")  # Отвечает на сообщение Пройти тест и запускает машину состояний
+@router.message(F.text == "Пройти тест 📃")  # Отвечает на сообщение Пройти тест и запускает машину состояний
 async def process_test(message: types.Message, state: FSMContext) -> None:
     await state.set_state(states.Test.Q1)
+    await message.answer(f'{test_questions.q}', reply_markup=markup.markup_main())
     await message.answer(f'{test_questions.q1a}\nИЛИ\n{test_questions.q1b}', reply_markup=markup.markup_test())
 
 
@@ -37,7 +38,7 @@ async def process_test_1(message: types.Message, state: FSMContext) -> None:
         await state.set_state(states.Test.Q2)
         await message.answer(f'{test_questions.q2a}\nИЛИ\n{test_questions.q2b}', reply_markup=markup.markup_test())
     else:
-        await message.answer("Пожалуйста, выберите один из предложенных вариантов.")
+        await message.answer("Выбери один из предложенных вариантов.")
 
 
 @router.message(states.Test.Q2)
@@ -51,7 +52,7 @@ async def process_test_2(message: types.Message, state: FSMContext) -> None:
         await state.set_state(states.Test.Q3)
         await message.answer(f'{test_questions.q3a}\nИЛИ\n{test_questions.q3b}', reply_markup=markup.markup_test())
     else:
-        await message.answer("Пожалуйста, выберите один из предложенных вариантов.")
+        await message.answer("Выбери один из предложенных вариантов.")
 
 
 @router.message(states.Test.Q3)
@@ -65,7 +66,7 @@ async def process_test_3(message: types.Message, state: FSMContext) -> None:
         await state.set_state(states.Test.Q4)
         await message.answer(f'{test_questions.q4a}\nИЛИ\n{test_questions.q4b}', reply_markup=markup.markup_test())
     else:
-        await message.answer("Пожалуйста, выберите один из предложенных вариантов.")
+        await message.answer("Выбери один из предложенных вариантов.")
 
 @router.message(states.Test.Q4)
 async def process_test_4(message: types.Message, state: FSMContext) -> None:
@@ -78,7 +79,7 @@ async def process_test_4(message: types.Message, state: FSMContext) -> None:
         await state.set_state(states.Test.Q5)
         await message.answer(f'{test_questions.q5a}\nИЛИ\n{test_questions.q5b}', reply_markup=markup.markup_test())
     else:
-        await message.answer("Пожалуйста, выберите один из предложенных вариантов.")
+        await message.answer("Выбери один из предложенных вариантов.")
 
 @router.message(states.Test.Q5)
 async def process_test_5(message: types.Message, state: FSMContext) -> None:
@@ -91,7 +92,7 @@ async def process_test_5(message: types.Message, state: FSMContext) -> None:
         await state.set_state(states.Test.Q6)
         await message.answer(f'{test_questions.q6a}\nИЛИ\n{test_questions.q6b}', reply_markup=markup.markup_test())
     else:
-        await message.answer("Пожалуйста, выберите один из предложенных вариантов.")
+        await message.answer("Выбери один из предложенных вариантов.")
 
 
 
@@ -108,7 +109,7 @@ async def process_test_6(message: types.Message, state: FSMContext) -> None:
         await state.set_state(states.Test.Q7)
         await message.answer(f'{test_questions.q7a}\nИЛИ\n{test_questions.q7b}', reply_markup=markup.markup_test())
     else:
-        await message.answer("Пожалуйста, выберите один из предложенных вариантов.")
+        await message.answer("Выбери один из предложенных вариантов.")
 
 @router.message(states.Test.Q7)
 async def process_test_7(message: types.Message, state: FSMContext) -> None:
@@ -121,7 +122,7 @@ async def process_test_7(message: types.Message, state: FSMContext) -> None:
         await state.set_state(states.Test.Q8)
         await message.answer(f'{test_questions.q8a}\nИЛИ\n{test_questions.q8b}', reply_markup=markup.markup_test())
     else:
-        await message.answer("Пожалуйста, выберите один из предложенных вариантов.")
+        await message.answer("Выбери один из предложенных вариантов.")
 
 @router.message(states.Test.Q8)
 async def process_test_8(message: types.Message, state: FSMContext) -> None:
@@ -134,7 +135,7 @@ async def process_test_8(message: types.Message, state: FSMContext) -> None:
         await state.set_state(states.Test.Q9)
         await message.answer(f'{test_questions.q9a}\nИЛИ\n{test_questions.q9b}', reply_markup=markup.markup_test())
     else:
-        await message.answer("Пожалуйста, выберите один из предложенных вариантов.")
+        await message.answer("Выбери один из предложенных вариантов.")
 
 
 
@@ -149,7 +150,7 @@ async def process_test_9(message: types.Message, state: FSMContext) -> None:
         await state.set_state(states.Test.Q10)
         await message.answer(f'{test_questions.q10a}\nИЛИ\n{test_questions.q10b}', reply_markup=markup.markup_test())
     else:
-        await message.answer("Пожалуйста, выберите один из предложенных вариантов.")
+        await message.answer("Выбери один из предложенных вариантов.")
 
 @router.message(states.Test.Q10)
 async def process_test_10(message: types.Message, state: FSMContext) -> None:
@@ -162,7 +163,7 @@ async def process_test_10(message: types.Message, state: FSMContext) -> None:
         await state.set_state(states.Test.Q11)
         await message.answer(f'{test_questions.q11a}\nИЛИ\n{test_questions.q11b}', reply_markup=markup.markup_test())
     else:
-        await message.answer("Пожалуйста, выберите один из предложенных вариантов.")
+        await message.answer("Выбери один из предложенных вариантов.")
 
 @router.message(states.Test.Q11)
 async def process_test_11(message: types.Message, state: FSMContext) -> None:
@@ -175,7 +176,7 @@ async def process_test_11(message: types.Message, state: FSMContext) -> None:
         await state.set_state(states.Test.Q12)
         await message.answer(f'{test_questions.q12a}\nИЛИ\n{test_questions.q12b}', reply_markup=markup.markup_test())
     else:
-        await message.answer("Пожалуйста, выберите один из предложенных вариантов.")
+        await message.answer("Выбери один из предложенных вариантов.")
 
 
 
@@ -191,7 +192,7 @@ async def process_test_12(message: types.Message, state: FSMContext) -> None:
         await state.set_state(states.Test.Q13)
         await message.answer(f'{test_questions.q13a}\nИЛИ\n{test_questions.q13b}', reply_markup=markup.markup_test())
     else:
-        await message.answer("Пожалуйста, выберите один из предложенных вариантов.")
+        await message.answer("Выбери один из предложенных вариантов.")
 
 @router.message(states.Test.Q13)
 async def process_test_13(message: types.Message, state: FSMContext) -> None:
@@ -204,7 +205,7 @@ async def process_test_13(message: types.Message, state: FSMContext) -> None:
         await state.set_state(states.Test.Q14)
         await message.answer(f'{test_questions.q14a}\nИЛИ\n{test_questions.q14b}', reply_markup=markup.markup_test())
     else:
-        await message.answer("Пожалуйста, выберите один из предложенных вариантов.")
+        await message.answer("Выбери один из предложенных вариантов.")
 
 @router.message(states.Test.Q14)
 async def process_test_14(message: types.Message, state: FSMContext) -> None:
@@ -217,7 +218,7 @@ async def process_test_14(message: types.Message, state: FSMContext) -> None:
         await state.set_state(states.Test.Q15)
         await message.answer(f'{test_questions.q15a}\nИЛИ\n{test_questions.q15b}', reply_markup=markup.markup_test())
     else:
-        await message.answer("Пожалуйста, выберите один из предложенных вариантов.")
+        await message.answer("Выбери один из предложенных вариантов.")
 
 @router.message(states.Test.Q15)
 async def process_test_15(message: types.Message, state: FSMContext) -> None:
@@ -230,7 +231,7 @@ async def process_test_15(message: types.Message, state: FSMContext) -> None:
         await state.set_state(states.Test.Q16)
         await message.answer(f'{test_questions.q16a}\nИЛИ\n{test_questions.q16b}', reply_markup=markup.markup_test())
     else:
-        await message.answer("Пожалуйста, выберите один из предложенных вариантов().")
+        await message.answer("Выбери один из предложенных вариантов.")
 
 
 
@@ -246,7 +247,7 @@ async def process_test_16(message: types.Message, state: FSMContext) -> None:
         await state.set_state(states.Test.Q17)
         await message.answer(f'{test_questions.q17a}\nИЛИ\n{test_questions.q17b}', reply_markup=markup.markup_test())
     else:
-        await message.answer("Пожалуйста, выберите один из предложенных вариантов().")
+        await message.answer("Выбери один из предложенных вариантов.")
 
 
 @router.message(states.Test.Q17)
@@ -260,7 +261,7 @@ async def process_test_17(message: types.Message, state: FSMContext) -> None:
         await state.set_state(states.Test.Q18)
         await message.answer(f'{test_questions.q18a}\nИЛИ\n{test_questions.q18b}', reply_markup=markup.markup_test())
     else:
-        await message.answer("Пожалуйста, выберите один из предложенных вариантов().")
+        await message.answer("Выбери один из предложенных вариантов.")
 
 
 @router.message(states.Test.Q18)
@@ -274,7 +275,7 @@ async def process_test_18(message: types.Message, state: FSMContext) -> None:
         await state.set_state(states.Test.Q19)
         await message.answer(f'{test_questions.q19a}\nИЛИ\n{test_questions.q19b}', reply_markup=markup.markup_test())
     else:
-        await message.answer("Пожалуйста, выберите один из предложенных вариантов().")
+        await message.answer("Выбери один из предложенных вариантов.")
 
 
 @router.message(states.Test.Q19)
@@ -288,7 +289,7 @@ async def process_test_19(message: types.Message, state: FSMContext) -> None:
         await state.set_state(states.Test.Q20)
         await message.answer(f'{test_questions.q20a}\nИЛИ\n{test_questions.q20b}', reply_markup=markup.markup_test())
     else:
-        await message.answer("Пожалуйста, выберите один из предложенных вариантов().")
+        await message.answer("Выбери один из предложенных вариантов.")
 
 
 @router.message(states.Test.Q20)
@@ -298,7 +299,7 @@ async def process_test_20(message: types.Message, state: FSMContext) -> None:
     elif message.text == "Второе":
         await state.update_data(S19="20б")
     else:
-        await message.answer("Пожалуйста, выберите один из предложенных вариантов().")
+        await message.answer("Выбери один из предложенных вариантов.")
         return 
         
     data = await state.get_data()
@@ -333,7 +334,7 @@ async def process_test_20(message: types.Message, state: FSMContext) -> None:
     await message.answer(f'Опрос завершён {data_testing}', reply_markup=markup.markup_main())
 
 
-@router.message(F.text == "Посмотреть результат")  # Отвечает на сообщение Пройти тест и запускает машину состояний
+@router.message(F.text == "Посмотреть результат 🖨️")  # Отвечает на сообщение Пройти тест и запускает машину состояний
 async def process_test(message: types.Message) -> None:
     result = await get_user_testing_results(message.from_user.id)
     data_subjects = await get_subject_choice(message.from_user.id)
@@ -349,7 +350,7 @@ async def process_test(message: types.Message) -> None:
             data_testing = 'Человек - знаковая техника, знаковый образ'
 
 
-    if data_testing and data_subjects:
+    if result and data_testing and data_subjects:
         await message.answer(f'{data_testing}', reply_markup=markup.markup_main())
         subjects = [f"{i['subject']}: {i['score']} баллов" for i in data_subjects['Choose']]
         await message.answer('\n'.join(subjects), reply_markup=markup.markup_main())
@@ -362,7 +363,7 @@ async def process_test(message: types.Message) -> None:
             await message.answer(f'Специальности под ваши баллы не найдены', reply_markup=markup.markup_main())
 
 
-    elif data_testing:
+    elif result and data_testing:
         await message.answer(f'{data_testing}', reply_markup=markup.markup_main())
         await message.answer(f'Введить предметы которые сдавали', reply_markup=markup.markup_main())
     elif data_subjects:
@@ -373,10 +374,10 @@ async def process_test(message: types.Message) -> None:
         await message.answer("У вас нет результатов тестирования!", reply_markup=markup.markup_main())
 
 
-@router.message(F.text == "Выбрать предметы")
+@router.message(F.text == "Выбрать предметы 📖")
 async def choose_subjects(message: types.Message, state: FSMContext):
     await state.set_state(states.Subjects.Choose)
-    await message.answer("Выберите предметы, по которым вы сдавали экзамены и укажите баллы.\n"
+    await message.answer("Выбери предметы, по которым ты сдавал экзамены и укажите баллы.\n"
                          "Для выбора нескольких предметов используйте кнопки выбора.\n"
                          "Для завершения выбора нажмите кнопку 'Готово'.",
                          reply_markup=markup.markup_subjects())
@@ -402,7 +403,8 @@ async def process_exam_scores(message: types.Message, state: FSMContext):
         await set_subject_choice(user_id=message.from_user.id, subjects=data_subjects)
         data = [f"{i['subject']}: {i['score']} баллов" for i in data['Choose']]
     else:
-        await set_subject_choice(user_id=message.from_user.id, subjects=data["Choose"])
+        data = [f"{i['subject']}: {i['score']} баллов" for i in data['Choose']]
+        await set_subject_choice(user_id=message.from_user.id, subjects=data)
 
 
     await message.answer(f'Выбранные предметы и баллы по экзаменам:\n{" ".join(data)}', reply_markup=markup.markup_main())
