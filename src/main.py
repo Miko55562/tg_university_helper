@@ -7,7 +7,11 @@ import markup
 import states
 from aiogram.filters import CommandStart
 from settings import TOKEN
-from db_helper import set_user_testing_results, get_user_testing_results, get_subject_choice, set_subject_choice, find_matching_specialties
+from db_helper import set_user_testing_results, \
+                      get_user_testing_results, \
+                      get_subject_choice, \
+                      set_subject_choice, \
+                      find_matching_specialties
 import test_questions
 from functools import reduce
 
