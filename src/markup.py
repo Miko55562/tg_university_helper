@@ -338,11 +338,11 @@ def markup_test():
 def markup_main():
     kb = [
         [
-            KeyboardButton(text='Пройти тест'),
-            KeyboardButton(text='Посмотреть результат')
+            KeyboardButton(text='Пройти тест 📃'),
+            KeyboardButton(text='Посмотреть результат 🖨️')
         ],
         [
-            KeyboardButton(text='Выбрать предметы'),
+            KeyboardButton(text='Выбрать предметы 📖'),
         ],
     ]
     keyboard = ReplyKeyboardMarkup(
@@ -352,11 +352,47 @@ def markup_main():
     return keyboard
 
 
+# def markup_subjects():
+#     kb = [
+#         [
+#             KeyboardButton(text='Математика 📐'),
+#             KeyboardButton(text='Русский 📗'),
+#         ],
+#         [
+#             KeyboardButton(text='Информатика 💻'),
+#             KeyboardButton(text='Физика 🛰️'),
+#         ],
+#         [
+#             KeyboardButton(text='Химия 🥼'),
+#             KeyboardButton(text='Биология 🩺'),
+#         ],
+#         [
+#             KeyboardButton(text='История 🗳️'),
+#             KeyboardButton(text='География 🌍'),
+#         ],
+#         [
+#             KeyboardButton(text='Обществознание 🎓'),
+#             KeyboardButton(text='Литература 📘'),
+#         ],
+#         [
+#             KeyboardButton(text='Иностранный язык ㊗️'),
+#         ],
+#         [
+#             KeyboardButton(text='Готово ✔️'),
+#         ],
+#     ]
+#     keyboard = ReplyKeyboardMarkup(
+#         keyboard=kb,
+#         resize_keyboard=True,
+#     )
+#     return keyboard
+
+
 def markup_subjects():
     kb = [
         [
             KeyboardButton(text='Математика'),
-            KeyboardButton(text='Русский язык'),
+            KeyboardButton(text='Русский'),
         ],
         [
             KeyboardButton(text='Информатика'),
@@ -375,7 +411,7 @@ def markup_subjects():
             KeyboardButton(text='Литература'),
         ],
         [
-            KeyboardButton(text='Иностранные языки'),
+            KeyboardButton(text='Иностранный язык'),
         ],
         [
             KeyboardButton(text='Готово'),
@@ -386,6 +422,7 @@ def markup_subjects():
         resize_keyboard=True,
     )
     return keyboard
+
 
 def markup_cancle():
     kb = [
