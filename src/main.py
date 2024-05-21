@@ -362,7 +362,7 @@ async def process_test(message: types.Message) -> None:
         specialties = await find_matching_specialties(sum([i['score'] for i in data_subjects['Choose']]), result, user_subject)
         if specialties:
             for specialty in specialties:
-                await message.answer(f'{specialty}', reply_markup=markup.markup_main())
+                await message.answer(f'{specialty[0]}\n{specialty[1]}\nМинимальный проходной балл: {specialty[2]}\nСредний проходной балл: {specialty[3]}', reply_markup=markup.markup_main())
         else:
             await message.answer(f'Специальности под ваши баллы не найдены', reply_markup=markup.markup_main())
 
@@ -395,23 +395,15 @@ async def process_exam_scores(message: types.Message, state: FSMContext):
         await message.answer(f"Вы ничего не изменили", reply_markup=markup.markup_main())
         return
 
+    print(data)
 
-    data_subjects = await get_subject_choice(user_id=message.from_user.id)
-    if data_subjects and ('Choose' in data_subjects):
-        i = 0
-        for sub in data['Choose']:
-            if sub['subject'] in [subject['subject'] for subject in data_subjects['Choose']]:
-                data_subjects['Choose'].pop(i)
-            data_subjects['Choose'].append(sub)
-            i += 1
-        await set_subject_choice(user_id=message.from_user.id, subjects=data_subjects)
-        data = [f"{i['subject']}: {i['score']} баллов" for i in data['Choose']]
-    else:
-        data = [f"{i['subject']}: {i['score']} баллов" for i in data['Choose']]
-        await set_subject_choice(user_id=message.from_user.id, subjects=data)
+    await set_subject_choice(user_id=message.from_user.id, subjects=data)
 
+    s = str()
+    for i in data['Choose']:
+        s += i['subject'] + ': ' + str(i['score']) + '\n'
 
-    await message.answer(f'Выбранные предметы и баллы по экзаменам:\n{" ".join(data)}', reply_markup=markup.markup_main())
+    await message.answer(f'Выбранные предметы и баллы по экзаменам:\n{s}', reply_markup=markup.markup_main())
 
 
 
