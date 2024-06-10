@@ -62,9 +62,12 @@ async def get_subject_choice(user_id: int) -> dict:
         cur = await con.cursor()
         await cur.execute("SELECT subjects FROM test_results WHERE user_id = ?", (user_id,))
         result = await cur.fetchone()
-        if result and result[0]:
-            subjects_json = result[0]
-            return json.loads(subjects_json)
+        print("-------", result)
+        if result and result[0] != 'null':
+            subjects_json = json.loads(result[0])
+            print(subjects_json)
+            subjects_dict = [{'subject': i['subject'], 'score': int(i['score'])} for i in subjects_json['Choose']]
+            return {'Choose': subjects_dict}
         else:
             return None
 
